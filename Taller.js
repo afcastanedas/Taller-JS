@@ -49,8 +49,7 @@ else if (Edad>60){
 
 let calculo_IBC= Salario+comisiones+(Total_de_horas_extras*Salario/240)
 let Calculo_de_salud= Salario*0.04
-let Calculo_de_pension= Salario*0.04
-let Calculo_de_riesgos_profesionales= Salario*0.00522
+let calculo_de_auxilio_de_transporte=
 
 
 
