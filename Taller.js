@@ -1,5 +1,5 @@
-let nombre="";
-let edad=0;
+let nombre=getElementById("nombre").value;
+let edad=parseInt(getElementById("edad").value);
 /*const Tipo_de_documento={
     RC: "Registro_Civil",
     TI: "Tarjeta de identidad",
@@ -8,11 +8,11 @@ let edad=0;
     PP: "Pasaporte",
 }*/
 /*Punto 3*/
-let numero_de_documento="";
-let salario=0;
-let comisiones=0;
-let total_de_horas_extras=0;
-let clasificacion_del_nivel_de_riesgo=0;
+let numero_de_documento=parseInt(getElementById("numero_de_documento").value);
+let salario=parseInt(getElementById("salario").value);
+let comisiones=parseInt(getElementById("comisiones").value);
+let total_de_horas_extras=parseInt(getElementById("total_de_horas_extras").value);
+let clasificacion_del_nivel_de_riesgo=parseInt(getElementById("niveles_de_riesgo").value);
 
 nombre=prompt("Ingrese su nombre");
 edad=parseInt(prompt("Ingrese su edad"));
