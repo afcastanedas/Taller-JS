@@ -59,3 +59,40 @@ let calculo_IBC= ibc * (salario + comisiones + total_de_horas_extras);
 let Calculo_de_salud= calculo_IBC * salud;
 let calculo_de_auxilio_de_transporte= subsidio_de_transporte;
 let calculo_de_pension= calculo_IBC * pension;
+
+/*Punto 2 validar perfil*/
+
+function validarPerfil() {
+    let edad = parseInt(document.getElementById("edad").value);
+
+    let mensaje = document.getElementById("mensaje");
+    let formularioSalario = document.getElementById("formularioSalario");
+    let formularioPension = document.getElementById("formularioPension");
+
+    formularioSalario.style.display = "none";
+    formularioPension.style.display = "none";
+
+    if (isNaN(edad) || edad <= 0) {
+        mensaje.textContent = "Por favor ingrese una edad válida.";
+        return;
+    }
+
+    if (edad < 18) {
+        mensaje.textContent = "El usuario es menor de edad. No puede continuar ni calcular prestaciones.";
+        return;
+    }
+
+    if (edad < 25) {
+        mensaje.textContent = "El usuario se clasifica como beneficiario por cotizante. No puede continuar.";
+        return;
+    }
+
+    if (edad >= 60) {
+        mensaje.textContent = "El usuario tiene 60 años o más. Solo se calculará el pago de pensión.";
+        formularioPension.style.display = "block";
+        return;
+    }
+
+    mensaje.textContent = "El usuario puede continuar con el cálculo de obligaciones laborales.";
+    formularioSalario.style.display = "block";
+}
