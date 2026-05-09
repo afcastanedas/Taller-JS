@@ -13,7 +13,9 @@ let salario=parseInt(document.getElementById("salario").value);
 let comisiones=parseInt(document.getElementById("comisiones").value);
 let total_de_horas_extras=parseInt(document.getElementById("total_de_horas_extras").value);
 let clasificacion_del_nivel_de_riesgo=parseInt(document.getElementById("niveles_de_riesgo").value);
+let tipo_de_documento=document.getElementById("tipo_de_documento").value;
 
+/*Reemplazo de prompts
 nombre=prompt("Ingrese su nombre");
 edad=parseInt(prompt("Ingrese su edad"));
 numero_de_documento=parseInt(prompt("Ingrese su numero de documento"));
@@ -21,6 +23,7 @@ salario=parseInt(prompt("Ingrese su salario"));
 comisiones=parseInt(prompt("Ingrese el valor de sus comisiones"));
 total_de_horas_extras=parseInt(prompt("Ingrese el total de horas extras trabajadas en el mes"));
 clasificacion_del_nivel_de_riesgo=parseInt(prompt("Ingrese su clasificacion del nivel de riesgo (1-5)"));
+*/
 
 /*Constantes*/
 const ibc= 0.70;
