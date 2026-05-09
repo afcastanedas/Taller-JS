@@ -8,16 +8,17 @@
 </head>    
 <body>
     <h1>Simulador</h1>
-    <button id="btn">Enter</button>
+    <button id="btn">Validar</button>
+    <p id="mensaje"></p>
 
     <label for="nombre">Ingresa tu Nombre:</label>
     <input type="text" id="nombre" name="nombre" minlength="3" maxlength="80" required>
 
     <label for="edad">Ingresa tu Edad:</label>
-    <input type="number" id="edad" name="edad" min="1" max="130">
+    <input type="number" id="edad" name="edad" min="1" max="130" required>
 
     <label for="numero_de_documento">Ingresa tu Numero de Documento:</label>
-    <input type="number" id="numero_de_documento">
+    <input type="number" id="numero_de_documento" required>
 
     <label for="tipo_de_documento">Tipo de documento:</label>
     <select id="tipo_de_documento" name="tipo_de_documento" required>
@@ -29,22 +30,27 @@
         <option value="PP">PP - Pasaporte</option>
     </select>
 
-    <label for="salario">Ingresa tu Salario:</label>
-    <input type="number" id="salario">
+    <div id="formularioSalario" style="display: none;">
 
-    <label for="comisiones">Comisiones:</label>
-    <input type="number" id="comisiones">
+        <button id="btnCalcular" type="button">Calcular obligaciones</button>
 
-    <label for="total_de_horas_extras">Total de Horas Extras:</label>
-    <input type="number" id="total_de_horas_extras" min=0>
+        <label for="salario">Ingresa tu Salario:</label>
+        <input type="number" id="salario">
 
-    <label for="clasificacion_del_nivel_de_riesgo">Nivel de Riesgo:</label>
-    <select id="niveles_de_riesgo">
-        <option value="1">0.522</option>
-        <option value="2">1.044</option>
-        <option value="3">2.436</option>
-        <option value="4">4.350</option>
-        <option value="5">6.960</option>
-    </select>
+        <label for="comisiones">Comisiones:</label>
+        <input type="number" id="comisiones">
+
+        <label for="total_de_horas_extras">Total de Horas Extras:</label>
+        <input type="number" id="total_de_horas_extras" min="0" value="0">
+
+        <label for="clasificacion_del_nivel_de_riesgo">Nivel de Riesgo:</label>
+        <select id="niveles_de_riesgo">
+            <option value="1">0.522</option>
+            <option value="2">1.044</option>
+            <option value="3">2.436</option>
+            <option value="4">4.350</option>
+            <option value="5">6.960</option>
+        </select>
+    </div>    
 
     
