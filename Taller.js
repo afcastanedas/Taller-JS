@@ -8,11 +8,11 @@ let edad=parseInt(document.getElementById("edad").value);
     PP: "Pasaporte",
 }*/
 /*Punto 3*/
-let numero_de_documento=parseInt(getElementById("numero_de_documento").value);
-let salario=parseInt(getElementById("salario").value);
-let comisiones=parseInt(getElementById("comisiones").value);
-let total_de_horas_extras=parseInt(getElementById("total_de_horas_extras").value);
-let clasificacion_del_nivel_de_riesgo=parseInt(getElementById("niveles_de_riesgo").value);
+let numero_de_documento=parseInt(document.getElementById("numero_de_documento").value);
+let salario=parseInt(document.getElementById("salario").value);
+let comisiones=parseInt(document.getElementById("comisiones").value);
+let total_de_horas_extras=parseInt(document.getElementById("total_de_horas_extras").value);
+let clasificacion_del_nivel_de_riesgo=parseInt(document.getElementById("niveles_de_riesgo").value);
 
 nombre=prompt("Ingrese su nombre");
 edad=parseInt(prompt("Ingrese su edad"));
