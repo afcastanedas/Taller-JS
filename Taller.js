@@ -1,5 +1,5 @@
-let nombre=getElementById("nombre").value;
-let edad=parseInt(getElementById("edad").value);
+let nombre=document.getElementById("nombre").value;
+let edad=parseInt(document.getElementById("edad").value);
 /*const Tipo_de_documento={
     RC: "Registro_Civil",
     TI: "Tarjeta de identidad",
