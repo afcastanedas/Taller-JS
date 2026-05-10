@@ -1,5 +1,7 @@
-let nombre=document.getElementById("nombre").value;
-let edad=parseInt(document.getElementById("edad").value);
+let nombre=""
+let edad=0
+let tipo_de_documento= ""
+let numero_de_documento= ""
 /*const Tipo_de_documento={
     RC: "Registro_Civil",
     TI: "Tarjeta de identidad",
@@ -8,12 +10,44 @@ let edad=parseInt(document.getElementById("edad").value);
     PP: "Pasaporte",
 }*/
 /*Punto 3*/
-let numero_de_documento=parseInt(document.getElementById("numero_de_documento").value);
-let salario=parseInt(document.getElementById("salario").value);
-let comisiones=parseInt(document.getElementById("comisiones").value);
-let total_de_horas_extras=parseInt(document.getElementById("total_de_horas_extras").value);
-let clasificacion_del_nivel_de_riesgo=parseInt(document.getElementById("niveles_de_riesgo").value);
-let tipo_de_documento=document.getElementById("tipo_de_documento").value;
+let salario= 0
+let comisiones= 0
+let total_de_horas_extras=0
+let clasificacion_del_nivel_de_riesgo=0
+
+/*Formularios*/ 
+const formularioDatosPersonales = document.getElementById('formularioDatosPersonales')
+const formularioSalario = document.getElementById('formularioSalario')
+const formularioPension = document.getElementById("formularioPension");
+
+formularioSalario.addEventListener('submit', (event) => {
+    event.preventDefault();
+    salario=parseInt(document.getElementById("salario").value);
+    comisiones=parseInt(document.getElementById("comisiones").value);
+    total_de_horas_extras=parseInt(document.getElementById("total_de_horas_extras").value);
+    clasificacion_del_nivel_de_riesgo=parseInt(document.getElementById("niveles_de_riesgo").value);
+
+    realizarCalculos(salario, comisiones, total_de_horas_extras, clasificacion_del_nivel_de_riesgo)
+
+})
+
+formularioPension.addEventListener('submit', (event) => {
+    event.preventDefault();
+    mesadaPensional=parseInt(document.getElementById("mesadaPensional").value);
+
+    realizarCalculosPension(mesadaPensional)
+
+})
+
+formularioDatosPersonales.addEventListener('submit', (event) => {
+    event.preventDefault();
+    nombre=document.getElementById("nombre").value;
+    edad=parseInt(document.getElementById("edad").value);
+    tipo_de_documento=document.getElementById("tipo_de_documento").value;
+    numero_de_documento= document.getElementById("numero_de_documento").value;
+    validarPerfil(edad)
+})
+
 
 /*Reemplazo de prompts
 nombre=prompt("Ingrese su nombre");
@@ -44,7 +78,7 @@ const nivelesDeRiesgo = [
 ];  
 /*Terminar las constantes*/
 
-/* if y else*/
+/* if y else*//*
 function validarUsuario(){
 if (edad<18){
     alert("no se calcula porque es menor de edad");
@@ -55,25 +89,30 @@ if (edad<18){
 } else if (edad>60){
     alert("se calcula pension por ser mayor de 60 años");
 };
-}
+}**/
 /*Calculo Variables*/
 
-let calculo_IBC= ibc * (salario + comisiones + total_de_horas_extras);
-let Calculo_de_salud= calculo_IBC * salud;
-let calculo_de_auxilio_de_transporte= subsidio_de_transporte;
-let calculo_de_pension= calculo_IBC * pension;
+function realizarCalculos(salario, comisiones, horasExtras, nivelDeRiesgo) {
+    let calculoIBC= ibc * (salario + comisiones + horasExtras);
+    let CalculoSalud= calculoIBC * salud;
+    let calculoAuxilioDeTransporte= subsidio_de_transporte;
+    let calculoPension= calculoIBC * pension;
+
+    console.log(calculoIBC, CalculoSalud, calculoAuxilioDeTransporte, calculoPension)
+}
+
+function realizarCalculosPension(mesada) {
+    let calculoIBC= ibc * mesada;
+    let CalculoSalud= calculoIBC * salud;
+
+    console.log(calculoIBC, CalculoSalud)
+}
 
 /*Punto 2 validar perfil*/
 
-function validarPerfil() {
-    let edad = parseInt(document.getElementById("edad").value);
+function validarPerfil(edad) {
 
     let mensaje = document.getElementById("mensaje");
-    let formularioSalario = document.getElementById("formularioSalario");
-    let formularioPension = document.getElementById("formularioPension");
-
-    formularioSalario.style.display = "none";
-    formularioPension.style.display = "none";
 
     if (isNaN(edad) || edad <= 0) {
         mensaje.textContent = "Por favor ingrese una edad válida.";
@@ -93,9 +132,11 @@ function validarPerfil() {
     if (edad >= 60) {
         mensaje.textContent = "El usuario tiene 60 años o más. Solo se calculará el pago de pensión.";
         formularioPension.style.display = "block";
+        formularioDatosPersonales.style.display = "none";
         return;
     }
 
     mensaje.textContent = "El usuario puede continuar con el cálculo de obligaciones laborales.";
     formularioSalario.style.display = "block";
+    formularioDatosPersonales.style.display = "none";
 }
