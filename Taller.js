@@ -93,19 +93,141 @@ if (edad<18){
 /*Calculo Variables*/
 
 function realizarCalculos(salario, comisiones, horasExtras, nivelDeRiesgo) {
-    let calculoIBC= ibc * (salario + comisiones + horasExtras);
-    let CalculoSalud= calculoIBC * salud;
-    let calculoAuxilioDeTransporte= subsidio_de_transporte;
-    let calculoPension= calculoIBC * pension;
+    let resultados = document.getElementById("resultados");
 
-    console.log(calculoIBC, CalculoSalud, calculoAuxilioDeTransporte, calculoPension)
+    if (isNaN(salario) || salario < 0) {
+        resultados.innerHTML = "Ingrese un salario válido.";
+        return;
+    }
+
+    if (isNaN(comisiones) || comisiones < 0) {
+        resultados.innerHTML = "Ingrese un valor válido para comisiones.";
+        return;
+    }
+
+    if (isNaN(horasExtras) || horasExtras < 0) {
+        resultados.innerHTML = "Ingrese un valor válido para horas extras.";
+        return;
+    }
+
+    if (isNaN(nivelDeRiesgo) || nivelDeRiesgo < 1 || nivelDeRiesgo > 5) {
+        resultados.innerHTML = "Seleccione un nivel de riesgo válido.";
+        return;
+    }
+
+    let totalDevengado = salario + comisiones + horasExtras;
+
+    let calculoIBC = totalDevengado * ibc;
+
+    let calculoSalud = calculoIBC * salud;
+    let calculoPension = calculoIBC * pension;
+
+    let calculoAuxilioDeTransporte = 0;
+
+    if (salario <= 2 * Salario_minimo_legal_vigente) {
+        calculoAuxilioDeTransporte = subsidio_de_transporte;
+    }
+
+    let calculoFondoSolidaridad = 0;
+
+    if (calculoIBC >= 4 * Salario_minimo_legal_vigente) {
+        calculoFondoSolidaridad = calculoIBC * fondo_de_solidaridad;
+    }
+
+    let tarifaARL = nivelesDeRiesgo[nivelDeRiesgo - 1].valor;
+    let calculoARL = calculoIBC * tarifaARL;
+
+    let retencionFuente = calcularRetencionFuente(
+        totalDevengado,
+        calculoSalud,
+        calculoPension
+    );
+
+    let ingresosTotales =
+        salario +
+        comisiones +
+        horasExtras +
+        calculoAuxilioDeTransporte;
+
+    let deduccionesTotales =
+        calculoSalud +
+        calculoPension +
+        calculoFondoSolidaridad +
+        calculoARL +
+        retencionFuente;
+
+    let totalFinal = ingresosTotales - deduccionesTotales;
+
+    resultados.innerHTML = `
+        <h2>Resultados</h2>
+
+        <p><strong>Salario:</strong> ${formatoCOP(salario)}</p>
+        <p><strong>Comisiones:</strong> ${formatoCOP(comisiones)}</p>
+        <p><strong>Horas extras:</strong> ${formatoCOP(horasExtras)}</p>
+        <p><strong>Total devengado:</strong> ${formatoCOP(totalDevengado)}</p>
+
+        <p><strong>IBC:</strong> ${formatoCOP(calculoIBC)}</p>
+        <p><strong>Auxilio de transporte:</strong> ${formatoCOP(calculoAuxilioDeTransporte)}</p>
+
+        <h3>Deducciones</h3>
+        <p><strong>Salud:</strong> ${formatoCOP(calculoSalud)}</p>
+        <p><strong>Pensión:</strong> ${formatoCOP(calculoPension)}</p>
+        <p><strong>Fondo de solidaridad:</strong> ${formatoCOP(calculoFondoSolidaridad)}</p>
+        <p><strong>ARL:</strong> ${formatoCOP(calculoARL)}</p>
+        <p><strong>Retención en la fuente:</strong> ${formatoCOP(retencionFuente)}</p>
+
+        <h3>Total</h3>
+        <p><strong>Ingresos totales:</strong> ${formatoCOP(ingresosTotales)}</p>
+        <p><strong>Deducciones totales:</strong> ${formatoCOP(deduccionesTotales)}</p>
+        <p><strong>Total final:</strong> ${formatoCOP(totalFinal)}</p>
+    `;
 }
 
 function realizarCalculosPension(mesada) {
-    let calculoIBC= ibc * mesada;
-    let CalculoSalud= calculoIBC * salud;
+    let resultados = document.getElementById("resultados");
 
-    console.log(calculoIBC, CalculoSalud)
+    if (isNaN(mesada) || mesada < 0) {
+        resultados.innerHTML = "Ingrese una mesada pensional válida.";
+        return;
+    }
+
+    let calculoPension = mesada * pension;
+
+    resultados.innerHTML = `
+        <h2>Resultado de pensión</h2>
+        <p><strong>Mesada pensional:</strong> ${formatoCOP(mesada)}</p>
+        <p><strong>Pago de pensión:</strong> ${formatoCOP(calculoPension)}</p>
+    `;
+}
+
+function calcularRetencionFuente(totalDevengado, calculoSalud, calculoPension) {
+    let ingresoLaboralGravado = totalDevengado - calculoSalud - calculoPension;
+
+    if (ingresoLaboralGravado <= 0) {
+        return 0;
+    }
+
+    let ingresoEnUVT = ingresoLaboralGravado / Unidad_de_valor_tributario;
+
+    let impuestoUVT = 0;
+
+    if (ingresoEnUVT <= 95) {
+        impuestoUVT = 0;
+    } else if (ingresoEnUVT <= 150) {
+        impuestoUVT = (ingresoEnUVT - 95) * 0.19;
+    } else if (ingresoEnUVT <= 360) {
+        impuestoUVT = ((ingresoEnUVT - 150) * 0.28) + 10;
+    } else if (ingresoEnUVT <= 640) {
+        impuestoUVT = ((ingresoEnUVT - 360) * 0.33) + 69;
+    } else if (ingresoEnUVT <= 945) {
+        impuestoUVT = ((ingresoEnUVT - 640) * 0.35) + 162;
+    } else if (ingresoEnUVT <= 2300) {
+        impuestoUVT = ((ingresoEnUVT - 945) * 0.37) + 268;
+    } else {
+        impuestoUVT = ((ingresoEnUVT - 2300) * 0.39) + 770;
+    }
+
+    return impuestoUVT * Unidad_de_valor_tributario;
 }
 
 /*Punto 2 validar perfil*/
