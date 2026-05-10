@@ -70,12 +70,12 @@ const pension= 0.04;
 const fondo_de_solidaridad= 0.01;
 
 const nivelesDeRiesgo = [
-    { nombre: "Riesgo 1", valor: 0.522 },
-    { nombre: "Riesgo 2", valor: 1.044 },
-    { nombre: "Riesgo 3", valor: 2.436 },
-    { nombre: "Riesgo 4", valor: 4.350 },
-    { nombre: "Riesgo 5", valor: 6.960 }
-];  
+    { nombre: "Riesgo 1", valor: 0.00522 },
+    { nombre: "Riesgo 2", valor: 0.01044 },
+    { nombre: "Riesgo 3", valor: 0.02436 },
+    { nombre: "Riesgo 4", valor: 0.04350 },
+    { nombre: "Riesgo 5", valor: 0.06960 }
+];
 /*Terminar las constantes*/
 
 /* if y else*//*
