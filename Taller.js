@@ -33,7 +33,7 @@ formularioSalario.addEventListener('submit', (event) => {
 
 formularioPension.addEventListener('submit', (event) => {
     event.preventDefault();
-    mesadaPensional=parseInt(document.getElementById("mesadaPensional").value);
+    let mesadaPensional=parseInt(document.getElementById("mesadaPensional").value);
 
     realizarCalculosPension(mesadaPensional)
 
@@ -233,11 +233,40 @@ function calcularRetencionFuente(totalDevengado, calculoSalud, calculoPension) {
 /*Punto 2 validar perfil*/
 
 function validarPerfil(edad) {
-
     let mensaje = document.getElementById("mensaje");
+
+    if (nombre.trim() === "") {
+        mensaje.textContent = "Por favor ingrese su nombre.";
+        return;
+    }
 
     if (isNaN(edad) || edad <= 0) {
         mensaje.textContent = "Por favor ingrese una edad válida.";
+        return;
+    }
+
+    if (numero_de_documento.trim() === "") {
+        mensaje.textContent = "Por favor ingrese su número de documento.";
+        return;
+    }
+
+    if (tipo_de_documento === "") {
+        mensaje.textContent = "Por favor seleccione un tipo de documento.";
+        return;
+    }
+
+    if (edad < 7 && tipo_de_documento !== "RC") {
+        mensaje.textContent = "Para menores de 7 años corresponde RC - Registro Civil.";
+        return;
+    }
+
+    if (edad >= 7 && edad < 18 && tipo_de_documento !== "TI") {
+        mensaje.textContent = "Para usuarios entre 7 y 17 años corresponde TI - Tarjeta de Identidad.";
+        return;
+    }
+
+    if (edad >= 18 && (tipo_de_documento === "RC" || tipo_de_documento === "TI")) {
+        mensaje.textContent = "Para mayores de edad no corresponde usar RC ni TI.";
         return;
     }
 
